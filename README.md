@@ -1,4 +1,4 @@
-Simple REST Server[^footnote]
+Simple REST Server
 =================
 Simple REST server built with Flask for Saving [game score](http://wasi0013.github.io/Brick)
 
@@ -14,5 +14,6 @@ Why this project?
 Just for having some fun with REST server and those games are also built
 for getting good grasp of the languages used.
 
+##Note
 
-[^footnote]:This project is under development. It is not yet connected with the actual game site. Please, be patient
+This project is under development. It is not yet connected with the actual game site. Please, be patient
