@@ -1,6 +1,6 @@
 Simple REST Server
 =================
-Simple REST server built with Flask for Saving [game score](http://wasi0013.github.io/Brick)
+Simple REST server built with Flask for Saving [game score](http://wasi0013.github.io/)
 
 List of Games
 --------------
