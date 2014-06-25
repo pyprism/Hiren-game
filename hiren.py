@@ -1,11 +1,12 @@
 __author__ = 'prism'
-#import datamamu
-import pymongo , datetime
-from flask import Flask, render_template, request, jsonify
+
+import pymongo
+import datetime
+from flask import Flask, request, jsonify
 
 client = pymongo.MongoClient('mongodb://localhost:27017/')
 db = client['Hiren-Game']
-collection = db['uhlala']
+collection = db['game']
 
 app = Flask(__name__)
 
