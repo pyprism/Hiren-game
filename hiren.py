@@ -3,8 +3,8 @@ __author__ = 'prism'
 import pymongo
 import datetime
 from flask import Flask, request, jsonify
-
-client = pymongo.MongoClient('mongodb://localhost:27017/')
+#change the URI and db name plz  :/
+client = pymongo.MongoClient('mongodb://localhost:27017/') 
 db = client['Hiren-Game']
 collection = db['game']
 
