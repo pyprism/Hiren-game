@@ -15,7 +15,6 @@ def create():
     if request.method == 'POST':
         name = request.form['name']
         id = request.form['id']
-        #duplicate = collection.find_one({'name': name, 'token': token})
         duplicate = collection.find_one({'id': id})
         if not duplicate:
             data = {'name': name,
