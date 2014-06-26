@@ -28,14 +28,28 @@ def create():
         return 'Fuck off!' + " " + str(datetime.datetime.utcnow())
 
 
-@app.route("/game",  methods=['POST', 'GET'])
-def game():
+@app.route('/create_game', methods=['POST'])
+def create_game():
+    if request.method == 'POST':
+        id = request.form['id']
+        game = request.form['game']
+        duplicate = collection.find_one({'id': id, 'game': game})
+        if not duplicate:
+            collection.update({'id': id},
+                              {'$set': {'game': game}})
+            return jsonify({'status': "created"}), 201
+        elif duplicate:
+            return jsonify({'status': 'already exits '}), 302
+
+
+@app.route("/update_score",  methods=['POST', 'GET'])
+def update_score():
     if request.method == 'POST':
         id = request.form['id']
         game = request.form['game']
         score = request.form['score']
-        collection.update({'id': id, 'game': game},
-                          {"$set": {'score': score}}, safe=True)
+        x = collection.update({'id': id, 'game': game},
+                              {"$set": {'score': score}}, safe=True)
         return jsonify({'status': 'voila babe , score updated !'}), 202
 
 
@@ -44,7 +58,7 @@ def result():
     if request.method == 'POST':
         id = request.form['id']
         game = request.form['game']
-        data = collection.find({'id': id, 'game': game})
+        data = collection.find_one({'id': id, 'game': game}, {'_id': False})
         if data:
             return jsonify(data), 200
         elif not data:
@@ -54,7 +68,7 @@ def result():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return "Are You Mad? ", 404
+    return ":P ", 404
 
 
 if __name__ == "__main__":
