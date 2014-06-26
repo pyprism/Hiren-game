@@ -63,7 +63,10 @@ def result():
         elif not data:
             return jsonify({'status': 'not found, so get lost'}), 404
 
-
+#useless route ! just for dumbass heroku engine
+@app.route('/favicon.ico')
+def favicon():
+    return "."
 
 @app.errorhandler(404)
 def page_not_found(error):
