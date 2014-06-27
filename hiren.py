@@ -111,6 +111,18 @@ def result():
         elif not data:
             return jsonify({'status': 'not found, so get lost'}), 404
 
+#scoreboard 
+@app.route("/all_result", methods=['POST', 'OPTIONS'])
+@crossdomain(origin='*')
+def result():
+    if request.method == 'POST':
+        game = request.form['game']
+        data = collection.find({'game': game}, {'_id': False})
+        if data:
+            return jsonify(data), 200
+        elif not data:
+            return jsonify({'status': 'not found, so get lost'}), 404
+
 #useless route ! just for dumbass heroku engine
 @app.route('/favicon.ico')
 def favicon():
