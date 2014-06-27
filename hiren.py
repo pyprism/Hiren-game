@@ -3,8 +3,10 @@ __author__ = 'prism'
 
 import pymongo
 import datetime
-from flask import Flask, request, jsonify
-#change the URI and db name plz  :/
+from datetime import timedelta 
+from functools import update_wrapper
+from flask import Flask, request, jsonify, current_app, make_response
+
 client = pymongo.MongoClient('mongodb://localhost:27017/') 
 db = client['Hiren-Game']
 collection = db['game']
