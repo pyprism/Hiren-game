@@ -114,7 +114,7 @@ def result():
 #scoreboard 
 @app.route("/all_result", methods=['POST', 'OPTIONS'])
 @crossdomain(origin='*')
-def result():
+def all_result():
     if request.method == 'POST':
         game = request.form['game']
         data = collection.find({'game': game}, {'_id': False})
