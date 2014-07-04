@@ -13,7 +13,6 @@ collection = db['game']
 
 app = Flask(__name__)
 
-#Fix for 'Access-Control-Allow-Origin'
 def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_to_all=True, automatic_options=True):  
     if methods is not None:
         methods = ', '.join(sorted(x.upper() for x in methods))
@@ -54,20 +53,23 @@ def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_t
     return decorator
 
 
+
+
 @app.route("/",  methods=['POST', 'GET', 'OPTIONS'])
 @crossdomain(origin='*')
 def create():
     if request.method == 'POST':
         name = request.form['name']
         id = request.form['id']
+        #duplicate = collection.find_one({'name': name, 'token': token})
         duplicate = collection.find_one({'id': id})
         if not duplicate:
             data = {'name': name,
                     'id': id}
             collection.insert(data, safe=True)
-            return jsonify({'status': 'created'}), 201
+            return jsonify({'status': 'Registered new User'}), 201
         else:
-            return jsonify({'status': 'already exits'}), 302
+            return jsonify({'status': 'already exists'}), 302
     elif request.method == "GET":
         return 'Fuck off!' + " " + str(datetime.datetime.utcnow())
 
@@ -82,9 +84,9 @@ def create_game():
         if not duplicate:
             collection.update({'id': id},
                               {'$set': {'game': game}})
-            return jsonify({'status': "created"}), 201
+            return jsonify({'status': "Game Name added"}), 201
         elif duplicate:
-            return jsonify({'status': 'already exits '}), 302
+            return jsonify({'status': 'already exists '}), 302
 
 
 @app.route("/update_score",  methods=['POST', 'GET', 'OPTIONS'])
@@ -96,7 +98,7 @@ def update_score():
         score = request.form['score']
         x = collection.update({'id': id, 'game': game},
                               {"$set": {'score': score}}, safe=True)
-        return jsonify({'status': 'voila babe , score updated !'}), 202
+        return jsonify({'status': 'Score updated!'}), 202
 
 
 @app.route("/result", methods=['POST', 'OPTIONS'])
@@ -109,26 +111,34 @@ def result():
         if data:
             return jsonify(data), 200
         elif not data:
-            return jsonify({'status': 'not found, so get lost'}), 404
+            return jsonify({'status': 'no result found'}), 404
 
-#scoreboard 
+#scoreboard
 @app.route("/all_result", methods=['POST', 'OPTIONS'])
 @crossdomain(origin='*')
 def all_result():
     if request.method == 'POST':
         game = request.form['game']
-        data = collection.find({'game': game}, {'_id': False})
+        data={}
+        for i,item in  enumerate(collection.find({'game':game})):
+            del item["_id"]
+            del item["game"]
+            del item["id"]
+            data.update({"id"+str(i):item})
         if data:
             return jsonify(data), 200
         elif not data:
-            return jsonify({'status': 'not found, so get lost'}), 404
+            return jsonify({'status': 'no scores!'}), 404
 
-#useless route ! just for dumbass heroku engine
+
+
 @app.route('/favicon.ico')
+@crossdomain(origin='*')
 def favicon():
     return "."
 
 @app.errorhandler(404)
+@crossdomain(origin='*')
 def page_not_found(error):
     return ":P ", 404
 
