@@ -1,4 +1,4 @@
-Simple REST Server
+Simple REST Server [![Requirements Status](https://requires.io/github/pyprism/Hiren-game/requirements.png?branch=master)](https://requires.io/github/pyprism/Hiren-game/requirements/?branch=master)
 =================
 Simple REST server built with Flask for Saving [game score](http://wasi0013.github.io/)
 
